@@ -1,13 +1,41 @@
 /* =========================================================
    Ruleta de Sorteo AKVA
-   - Carga participantes desde Excel (.xlsx/.xls) o CSV
+   - Participantes precargados (editable)
+   - Carga opcional desde Excel (.xlsx/.xls) o CSV
    - Dibuja una ruleta en canvas y la hace girar
    - Detecta automáticamente columnas Nombre / Apellido
    ========================================================= */
 
+// ----- Participantes precargados -----
+// Puedes editar esta lista directamente o cargar un Excel desde la interfaz.
+const DEFAULT_NAMES = [
+  "Ignacio Alcantara",
+  "Cristhian Caceres",
+  "Leonardo Caneo",
+  "Sebastián Espinoza",
+  "Claudio Dorner",
+  "Javier Perez Bustamante",
+  "Marcos Muñoz Ortiz",
+  "Rodrigo Bahamondez",
+  "Luis Alvarado",
+  "Jose Olivares",
+  "Matias Toledo",
+  "Anis Aguila",
+  "Roberto Muñoz Rivas",
+  "Marcela Ortega Cabezas",
+  "Ricardo Hernandez",
+  "Victoria Triviño Azocar",
+  "Juan Manuel Higueras",
+  "Eduardo Carcamo",
+  "Pablo Barra",
+  "Roberto Ibañez",
+  "Karina Coronado",
+  "Claudio Muñoz"
+];
+
 // ----- Estado -----
-let names = [];          // lista de nombres completos
-let currentRotation = 0; // rotación acumulada (grados)
+let names = [...DEFAULT_NAMES]; // lista de nombres completos
+let currentRotation = 0;        // rotación acumulada (grados)
 let spinning = false;
 
 // Paleta de colores para los segmentos
@@ -145,10 +173,10 @@ document.getElementById("shuffleBtn").addEventListener("click", () => {
 });
 
 document.getElementById("resetBtn").addEventListener("click", () => {
-  names = [];
+  names = [...DEFAULT_NAMES];
   syncTextarea();
   drawWheel();
-  setStatus("Lista vacía. Carga un Excel o escribe nombres.");
+  setStatus(`✓ Lista restablecida (${names.length} participantes).`);
 });
 
 // ----- Dibujo de la ruleta -----
@@ -315,5 +343,6 @@ function launchConfetti() {
 }
 
 // ----- Inicio -----
+syncTextarea();
 drawWheel();
-setStatus("Carga un Excel/CSV o usa la edición manual para empezar.");
+setStatus(`✓ ${names.length} participantes precargados. ¡Listo para girar! 🎯`);
