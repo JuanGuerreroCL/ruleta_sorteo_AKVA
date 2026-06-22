@@ -6,6 +6,7 @@
    - Detecta automáticamente columnas Nombre / Apellido
    ========================================================= */
 
+export function initRuletaApp() {
 // ----- Participantes precargados -----
 // Puedes editar esta lista directamente o cargar un Excel desde la interfaz.
 const DEFAULT_NAMES = [
@@ -346,3 +347,4 @@ function launchConfetti() {
 syncTextarea();
 drawWheel();
 setStatus(`✓ ${names.length} participantes precargados. ¡Listo para girar! 🎯`);
+}

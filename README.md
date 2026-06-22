@@ -58,12 +58,22 @@ vercel --prod        # publica en producción
 
 ```
 ruleta_sorteo_AKVA/
-├── index.html      # estructura y carga de SheetJS
-├── styles.css      # estilos de la ruleta y el panel
-├── script.js       # lógica: lectura de Excel, dibujo y giro
+├── index.html                  # estructura principal y carga de SheetJS
+├── src/
+│   ├── js/
+│   │   ├── main.js             # punto de entrada de la app
+│   │   └── ruleta.js           # lógica: lectura de Excel, dibujo y giro
+│   ├── styles/
+│   │   └── styles.css          # estilos de la ruleta y el panel
+│   └── integrations/
+│       └── akvarell.js         # punto de integración para AKVArell
 ├── vercel.json     # configuración de despliegue
 └── README.md
 ```
+
+## 🧩 Integración AKVArell
+
+Se agregó `src/integrations/akvarell.js` como punto único para integrar AKVArell sin mezclar esa configuración con la lógica de la ruleta.
 
 ## 🛠️ Tecnologías
 
