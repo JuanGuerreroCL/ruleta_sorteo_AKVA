@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>🎡 Ruleta de Sorteo AKVA</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="topbar">
+    <h1>🎡 Ruleta de Sorteo <span class="brand">AKVA</span></h1>
+    <p class="subtitle">Gira la ruleta y descubre al ganador 🎉</p>
+  </header>
+
+  <main class="layout">
+    <!-- Columna izquierda: la ruleta -->
+    <section class="wheel-section">
+      <div class="wheel-wrap">
+        <div class="pointer" aria-hidden="true"></div>
+        <canvas id="wheel" width="500" height="500" role="img" aria-label="Ruleta de participantes"></canvas>
+        <button id="spinBtn" class="spin-center" type="button">GIRAR</button>
+      </div>
+
+      <div class="controls">
+        <button id="spinBtnAlt" class="btn btn-primary" type="button">🎯 Girar ruleta</button>
+        <label class="switch">
+          <input type="checkbox" id="removeWinner" checked />
+          <span>Quitar al ganador tras girar</span>
+        </label>
+        <label class="switch">
+          <input type="checkbox" id="soundOn" checked />
+          <span>🔊 Sonido</span>
+        </label>
+      </div>
+    </section>
+
+    <!-- Columna derecha: lista de participantes -->
+    <aside class="panel">
+      <h2>Participantes (<span id="count">0</span>)</h2>
+      <p class="hint">Escribe un nombre por línea. Se actualiza al instante.</p>
+      <textarea id="namesInput" spellcheck="false" placeholder="Escribe un nombre por línea..."></textarea>
+      <div class="panel-actions">
+        <button id="applyBtn" class="btn btn-secondary" type="button">Actualizar ruleta</button>
+        <button id="shuffleBtn" class="btn btn-ghost" type="button">🔀 Mezclar</button>
+        <button id="resetBtn" class="btn btn-ghost" type="button">↺ Restablecer</button>
+      </div>
+
+      <div class="history">
+        <h3>Ganadores</h3>
+        <ol id="winnersList" class="winners"></ol>
+      </div>
+    </aside>
+  </main>
+
+  <!-- Modal del ganador -->
+  <div id="winnerModal" class="modal" aria-hidden="true">
+    <div class="modal-card">
+      <div class="confetti" id="confetti"></div>
+      <p class="modal-label">🎉 ¡Ganador! 🎉</p>
+      <p id="winnerName" class="modal-name">—</p>
+      <button id="closeModal" class="btn btn-primary" type="button">Continuar</button>
+    </div>
+  </div>
+
+  <footer class="footer">
+    <span>Ruleta de Sorteo AKVA · Hecho para tu evento</span>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
