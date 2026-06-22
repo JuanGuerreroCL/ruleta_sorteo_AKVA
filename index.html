@@ -8,11 +8,13 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="styles.css" />
+  <!-- SheetJS para leer archivos Excel (.xlsx/.xls) y CSV -->
+  <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
 </head>
 <body>
   <header class="topbar">
     <h1>🎡 Ruleta de Sorteo <span class="brand">AKVA</span></h1>
-    <p class="subtitle">Gira la ruleta y descubre al ganador 🎉</p>
+    <p class="subtitle">Carga tu Excel, gira la ruleta y descubre al ganador 🎉</p>
   </header>
 
   <main class="layout">
@@ -37,16 +39,33 @@
       </div>
     </section>
 
-    <!-- Columna derecha: lista de participantes -->
+    <!-- Columna derecha: carga y lista de participantes -->
     <aside class="panel">
       <h2>Participantes (<span id="count">0</span>)</h2>
-      <p class="hint">Escribe un nombre por línea. Se actualiza al instante.</p>
-      <textarea id="namesInput" spellcheck="false" placeholder="Escribe un nombre por línea..."></textarea>
-      <div class="panel-actions">
-        <button id="applyBtn" class="btn btn-secondary" type="button">Actualizar ruleta</button>
-        <button id="shuffleBtn" class="btn btn-ghost" type="button">🔀 Mezclar</button>
-        <button id="resetBtn" class="btn btn-ghost" type="button">↺ Restablecer</button>
+
+      <!-- Carga desde Excel -->
+      <div class="upload-box">
+        <p class="hint">📊 Carga un archivo <strong>Excel</strong> (.xlsx, .xls) o <strong>CSV</strong> con columnas <strong>Nombre</strong> y <strong>Apellido</strong>.</p>
+        <div class="upload-actions">
+          <label for="fileInput" class="btn btn-primary file-label">📂 Cargar Excel/CSV</label>
+          <input id="fileInput" type="file" accept=".xlsx,.xls,.csv" hidden />
+          <button id="templateBtn" class="btn btn-ghost" type="button">📥 Plantilla</button>
+        </div>
+        <p id="fileStatus" class="file-status"></p>
       </div>
+
+      <details class="manual">
+        <summary>✏️ Editar manualmente</summary>
+        <p class="hint">Un nombre completo por línea.</p>
+        <textarea id="namesInput" spellcheck="false" placeholder="Juan Pérez
+María González
+..."></textarea>
+        <div class="panel-actions">
+          <button id="applyBtn" class="btn btn-secondary" type="button">Actualizar ruleta</button>
+          <button id="shuffleBtn" class="btn btn-ghost" type="button">🔀 Mezclar</button>
+          <button id="resetBtn" class="btn btn-ghost" type="button">↺ Limpiar</button>
+        </div>
+      </details>
 
       <div class="history">
         <h3>Ganadores</h3>
