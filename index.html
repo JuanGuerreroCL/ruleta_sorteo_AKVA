@@ -3,74 +3,82 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>🎡 Ruleta de Sorteo AKVA</title>
+  <title>Sorteo AKVA group Chile - Digita</title>
+  <link rel="icon" type="image/x-icon" href="assets/fish-icon-white.ico" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&display=swap" rel="stylesheet" />
+  <!-- Akvarell: sistema de diseño / librería de componentes de AKVA -->
+  <link rel="stylesheet" href="https://akvagroup.github.io/akvarell/styles.css" />
   <link rel="stylesheet" href="styles.css" />
-  <!-- SheetJS para leer archivos Excel (.xlsx/.xls) y CSV -->
-  <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
 </head>
 <body>
   <header class="topbar">
-    <h1>🎡 Ruleta de Sorteo <span class="brand">AKVA</span></h1>
-    <p class="subtitle">Carga tu Excel, gira la ruleta y descubre al ganador 🎉</p>
+    <img class="logo" src="assets/AKVA group logo white.svg" alt="AKVA group" width="200" height="56" />
+    <h1>Ruleta de Sorteo</h1>
+    <p class="subtitle">Gira la ruleta y descubre al ganador...</p>
   </header>
 
   <main class="layout">
-    <!-- Columna izquierda: la ruleta -->
+    <!-- Columna izquierda: ganadores -->
+    <aside class="panel winners-panel">
+      <h2>Ganadores:</h2>
+      <ol id="winnersList" class="winners"></ol>
+    </aside>
+
+    <!-- Columna central: la ruleta -->
     <section class="wheel-section">
       <div class="wheel-wrap">
         <div class="pointer" aria-hidden="true"></div>
-        <canvas id="wheel" width="500" height="500" role="img" aria-label="Ruleta de participantes"></canvas>
-        <button id="spinBtn" class="spin-center" type="button">GIRAR</button>
+        <canvas id="wheel" width="1000" height="1000" role="img" aria-label="Ruleta de participantes"></canvas>
+        <button id="spinBtn" class="spin-center" type="button">
+          <img class="spin-fish" src="assets/fish-icon-white.ico" alt="" aria-hidden="true" />
+          <span>GIRAR</span>
+        </button>
       </div>
 
-      <div class="controls">
-        <button id="spinBtnAlt" class="btn btn-primary" type="button">🎯 Girar ruleta</button>
-        <label class="switch">
-          <input type="checkbox" id="removeWinner" checked />
-          <span>Quitar al ganador tras girar</span>
-        </label>
-        <label class="switch">
-          <input type="checkbox" id="soundOn" checked />
-          <span>🔊 Sonido</span>
-        </label>
-      </div>
     </section>
 
     <!-- Columna derecha: carga y lista de participantes -->
     <aside class="panel">
       <h2>Participantes (<span id="count">0</span>)</h2>
 
-      <!-- Carga desde Excel -->
-      <div class="upload-box">
-        <p class="hint">📊 Carga un archivo <strong>Excel</strong> (.xlsx, .xls) o <strong>CSV</strong> con columnas <strong>Nombre</strong> y <strong>Apellido</strong>.</p>
-        <div class="upload-actions">
-          <label for="fileInput" class="btn btn-primary file-label">📂 Cargar Excel/CSV</label>
-          <input id="fileInput" type="file" accept=".xlsx,.xls,.csv" hidden />
-          <button id="templateBtn" class="btn btn-ghost" type="button">📥 Plantilla</button>
-        </div>
-        <p id="fileStatus" class="file-status"></p>
-      </div>
-
       <details class="manual">
-        <summary>✏️ Editar manualmente</summary>
+        <summary>Editar manualmente</summary>
         <p class="hint">Un nombre completo por línea.</p>
-        <textarea id="namesInput" spellcheck="false" placeholder="Juan Pérez
+        <textarea id="namesInput" class="textarea" spellcheck="false" placeholder="Juan Pérez
 María González
 ..."></textarea>
         <div class="panel-actions">
-          <button id="applyBtn" class="btn btn-secondary" type="button">Actualizar ruleta</button>
-          <button id="shuffleBtn" class="btn btn-ghost" type="button">🔀 Mezclar</button>
-          <button id="resetBtn" class="btn btn-ghost" type="button">↺ Limpiar</button>
+          <button id="applyBtn" class="button" data-color="secondary" type="button">Actualizar ruleta</button>
+          <button id="shuffleBtn" class="button" data-color="secondary" data-variant="plain" type="button">Mezclar</button>
+          <button id="resetBtn" class="button" data-color="danger" data-variant="plain" type="button">↺ Limpiar</button>
         </div>
       </details>
 
-      <div class="history">
-        <h3>Ganadores</h3>
-        <ol id="winnersList" class="winners"></ol>
-      </div>
+      <details class="config">
+        <summary>Configuración</summary>
+        <label class="switch">
+          <input type="checkbox" id="removeWinner" class="checkbox" checked />
+          <span>Quitar al ganador tras girar</span>
+        </label>
+        <label class="switch">
+          <input type="checkbox" id="soundOn" class="checkbox" checked />
+          <span>Sonido</span>
+        </label>
+        <label class="volume-control">
+          <span>Volumen</span>
+          <input type="range" id="volume" min="0" max="100" value="70" />
+        </label>
+        <label class="config-row">
+          <span>Segundos de giro</span>
+          <input type="number" id="spinSeconds" class="input" min="5" max="120" value="20" />
+        </label>
+        <label class="config-row">
+          <span>Número de premios</span>
+          <input type="number" id="prizeCount" class="input" min="1" max="50" value="3" />
+        </label>
+      </details>
     </aside>
   </main>
 
@@ -78,14 +86,19 @@ María González
   <div id="winnerModal" class="modal" aria-hidden="true">
     <div class="modal-card">
       <div class="confetti" id="confetti"></div>
-      <p class="modal-label">🎉 ¡Ganador! 🎉</p>
+      <div class="modal-head">
+        <p class="modal-label"> Ganador</p>
+        <span class="modal-sep">·</span>
+        <p id="winnerPrize" class="modal-prize"> premio 1</p>
+      </div>
       <p id="winnerName" class="modal-name">—</p>
-      <button id="closeModal" class="btn btn-primary" type="button">Continuar</button>
+      <img id="winnerGif" class="modal-gif" src="https://media.tenor.com/NRvAuY9ug-gAAAAd/applause-clapping.gif" alt="Aplausos" />
+      <button id="closeModal" class="button" data-color="primary" data-size="large" type="button">Continuar</button>
     </div>
   </div>
 
   <footer class="footer">
-    <span>Ruleta de Sorteo AKVA · Hecho para tu evento</span>
+    <span>Ruleta de Sorteo AKVA group Chile · Digital Farming</span>
   </footer>
 
   <script src="script.js"></script>
