@@ -1,18 +1,18 @@
-# 🎡 Ruleta de Sorteo AKVA
+#  Ruleta de Sorteo AKVA
 
 Una ruleta de sorteo web que carga la lista de participantes desde un archivo **Excel** (`.xlsx`/`.xls`) o **CSV** con columnas **Nombre** y **Apellido**, gira con animación y muestra al ganador con confeti. Ideal para concursos y eventos.
 
 > 100% del lado del cliente (HTML + CSS + JavaScript). No requiere backend ni base de datos.
 
-## ✨ Características
+##  Características
 
-- 📊 **Carga desde Excel/CSV** — detecta automáticamente las columnas `Nombre` y `Apellido`.
-- 📥 **Plantilla descargable** para conocer el formato exacto.
-- 🎡 **Ruleta animada** en `<canvas>` con puntero y botón central **GIRAR**.
-- 🎉 **Modal de ganador** con confeti y sonido opcional.
-- ✂️ **Quitar al ganador** automáticamente para no repetir.
-- ✏️ **Edición manual** y botones para mezclar/limpiar.
-- 📱 **Responsive** — funciona en móvil y en proyector.
+-  **Carga desde Excel/CSV** — detecta automáticamente las columnas `Nombre` y `Apellido`.
+-  **Plantilla descargable** para conocer el formato exacto.
+-  **Ruleta animada** en `<canvas>` con puntero y botón central **GIRAR**.
+-  **Modal de ganador** con confeti y sonido opcional.
+-  **Quitar al ganador** automáticamente para no repetir.
+-  **Edición manual** y botones para mezclar/limpiar.
+-  **Responsive** — funciona en móvil y en proyector.
 
 ## 📋 Formato del Excel
 
@@ -25,7 +25,7 @@ Una ruleta de sorteo web que carga la lista de participantes desde un archivo **
 También se aceptan encabezados equivalentes como `Nombres`, `Apellidos`, `Name`, `Last name`, etc.
 Si no encuentra esas columnas, usará la primera columna con texto.
 
-## 🚀 Probar localmente
+##  Probar localmente
 
 Al ser estático, basta con abrir `index.html` en el navegador. Para evitar restricciones del navegador, puedes levantar un servidor simple:
 
@@ -54,7 +54,7 @@ vercel --prod        # publica en producción
 
 > Cada vez que hagas *push* a `main`, Vercel volverá a desplegar automáticamente y generará una URL de **Preview** provisional para desarrollo.
 
-## 📂 Estructura
+##  Estructura
 
 ```
 ruleta_sorteo_AKVA/
@@ -71,7 +71,7 @@ ruleta_sorteo_AKVA/
 └── README.md
 ```
 
-## 🧩 Integración AKVArell
+##  Integración AKVArell
 
 Se agregó `src/integrations/akvarell.js` como punto único para integrar AKVArell sin mezclar esa configuración con la lógica de la ruleta.
 
